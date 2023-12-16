@@ -1,16 +1,22 @@
 package com.ecommerce.backend.Models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.ecommerce.backend.Services.UserService;
+import jakarta.persistence.*;
 
 @Entity
 public class CartModel {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(name = "product_id")
     public String Id;
-    @Column(name = "user_id")
-    public String UserId;
+//    @ManyToOne
+//    @JoinColumn(name = "username")
+//    private UserModel userId;
+
+@Column(name = "user_id")
+private String userId;
+
     @Column(name = "brand")
     public String Brand;
     @Column(name = "color")
@@ -27,6 +33,10 @@ public class CartModel {
     public String Size;
     @Column(name = "title")
     public String Title;
+
+
+
+
     public String getId() {
         return Id;
     }
@@ -34,11 +44,17 @@ public class CartModel {
         Id = id;
     }
     public String getUserId() {
-        return UserId;
+        return userId;
     }
-    public void setUserId(String userId) {
-        UserId = userId;
-    }
+//    public UserModel getUserId() {
+//        return userId;
+//    }
+//    public void setUserId(UserModel userId) {
+//        this.userId = userId;
+//    }
+public void setUserId(String userId) {
+    this.userId = userId;
+}
     public String getBrand() {
         return Brand;
     }

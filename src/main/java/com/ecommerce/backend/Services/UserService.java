@@ -40,19 +40,19 @@ public class UserService implements UserServiceInterface {
         user.setPhone(phone);
 
         userRepository.save(user);
-        return new ResponseMessage("Registration successful for: " + username, HttpStatus.CREATED);
+        return new ResponseMessage("Registration successful for: " + username, HttpStatus.BAD_GATEWAY);
     }
     @Override
     public ResponseMessage getAllUsers(){
         Iterable<UserModel> users=userRepository.findAll();
-        return new ResponseMessage(gson.toJson(users),HttpStatus.OK);
+        return new ResponseMessage(gson.toJson(users), HttpStatus.BAD_GATEWAY);
     }
     @Override
     public ResponseMessage logIn(String username, String password) {
         Optional<UserModel> existingUser = Optional.ofNullable(userRepository.findByUsername(username));
         if (existingUser.isPresent()) {
             if (existingUser.get().getPassword().equals(password)) {
-                return new ResponseMessage("Login Successful", HttpStatus.OK);
+                return new ResponseMessage("Login Successful", HttpStatus.BAD_GATEWAY);
             } else {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Incorrect Password");
             }
