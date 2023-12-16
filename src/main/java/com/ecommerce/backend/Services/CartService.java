@@ -9,6 +9,8 @@ import com.google.gson.Gson;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CartService implements CartServiceInterface{
     private final UserRepository userRepository;
@@ -25,12 +27,23 @@ public class CartService implements CartServiceInterface{
 
 
     public ResponseMessage getCart(String userId) {
-        return new ResponseMessage(gson.toJson(cartRepository.findByUserId(userId)), HttpStatus.BAD_GATEWAY);
+//        return new ResponseMessage(gson.toJson(cartRepository.findByUserId(userId)), HttpStatus.OK);
+//        System.out.println(userId);
+        List<CartModel> cartModel = cartRepository.findByUserId(userId);
+//        System.out.println(cartModel);
+        try{
+
+            return new ResponseMessage(gson.toJson(cartModel), HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseMessage("No items in cart", HttpStatus.NOT_FOUND);
+        }
     }
+
 
     @Override
     public ResponseMessage getAll() {
-        return new ResponseMessage(gson.toJson(cartRepository.findAll()), HttpStatus.BAD_GATEWAY);
+        return new ResponseMessage(gson.toJson(cartRepository.findAll()), HttpStatus.OK);
     }
 
     public ResponseMessage addToCart(String userId, String productId, String brand, String color, String discount, String price, String sellingPrice, String imageUrl, String size, String title) {
