@@ -3,7 +3,7 @@ import org.springframework.http.HttpStatus;
 public class ResponseMessage {
     private final String message;
     private HttpStatus status = null;
-    public ResponseMessage(String message, HttpStatus badGateway) {
+    public ResponseMessage(String message, HttpStatus status) {
         this.message = message;
         this.status = status;
     }

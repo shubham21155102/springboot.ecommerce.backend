@@ -23,6 +23,8 @@ public class CartController
 
         String userId = getCartRequest.getUserId();
         System.out.println(userId);
+//        return new ResponseMessage("Hello", HttpStatus.OK);
+
         return cartService.getCart(userId);
     }
     @PostMapping("/addtocart")
@@ -42,17 +44,6 @@ public class CartController
 
         }
         catch (Exception e){
-//            String userId = addToCartRequest.getUserId();
-//            String productId = addToCartRequest.getProductId();
-//            String brand = addToCartRequest.getBrand();
-//            String color = addToCartRequest.getColor();
-//            String discount = addToCartRequest.getDiscount();
-//            String price = addToCartRequest.getPrice();
-//            String sellingPrice = addToCartRequest.getSellingPrice();
-//            String imageUrl = addToCartRequest.getImageUrl();
-//            String size = addToCartRequest.getSize();
-//            String title = addToCartRequest.getTitle();
-//            System.out.println(userId+productId+brand+color+discount+price+sellingPrice+imageUrl+size+title);
             return new ResponseMessage("Error", HttpStatus.BAD_REQUEST);
           }
     }
