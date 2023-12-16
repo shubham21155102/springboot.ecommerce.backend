@@ -2,8 +2,8 @@ package com.ecommerce.backend.Utils;
 import org.springframework.http.HttpStatus;
 public class ResponseMessage {
     private final String message;
-    private final HttpStatus status;
-    public ResponseMessage(String message, HttpStatus status) {
+    private HttpStatus status = null;
+    public ResponseMessage(String message, HttpStatus badGateway) {
         this.message = message;
         this.status = status;
     }
