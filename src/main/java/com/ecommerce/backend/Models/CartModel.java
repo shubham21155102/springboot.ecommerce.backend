@@ -1,8 +1,5 @@
 package com.ecommerce.backend.Models;
-
-import com.ecommerce.backend.Services.UserService;
 import jakarta.persistence.*;
-
 @Entity
 public class CartModel {
     @Id
