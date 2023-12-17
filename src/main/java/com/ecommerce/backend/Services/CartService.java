@@ -4,6 +4,7 @@ import com.ecommerce.backend.Models.CartModel;
 import com.ecommerce.backend.Models.UserModel;
 import com.ecommerce.backend.Repository.CartRepository;
 import com.ecommerce.backend.Repository.UserRepository;
+import com.ecommerce.backend.Utils.JSONConvert;
 import com.ecommerce.backend.Utils.ResponseMessage;
 import com.google.gson.Gson;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ public class CartService implements CartServiceInterface{
     private final UserRepository userRepository;
     private final CartRepository cartRepository;
     private final Gson gson;
-
+    private JSONConvert jsonConvert;
     public CartService(UserRepository userRepository, CartRepository cartRepository, Gson gson) {
         this.userRepository = userRepository;
         this.cartRepository = cartRepository;
@@ -32,8 +33,10 @@ public class CartService implements CartServiceInterface{
         List<CartModel> cartModel = cartRepository.findByUserId(userId);
 //        System.out.println(cartModel);
         try{
-
-            return new ResponseMessage(gson.toJson(cartModel), HttpStatus.OK);
+            jsonConvert = new JSONConvert();
+            String cartModelString = jsonConvert.convert(cartModel);
+//            System.out.println(cartModelString);
+            return new ResponseMessage(cartModelString, HttpStatus.OK);
         }
         catch (Exception e){
             return new ResponseMessage("No items in cart", HttpStatus.NOT_FOUND);
@@ -43,7 +46,9 @@ public class CartService implements CartServiceInterface{
 
     @Override
     public ResponseMessage getAll() {
-        return new ResponseMessage(gson.toJson(cartRepository.findAll()), HttpStatus.OK);
+        String cartModelString = gson.toJson(cartRepository.findAll());
+        System.out.println(cartModelString);
+        return new ResponseMessage(cartModelString, HttpStatus.OK);
     }
 
     public ResponseMessage addToCart(String userId, String productId, String brand, String color, String discount, String price, String sellingPrice, String imageUrl, String size, String title) {
